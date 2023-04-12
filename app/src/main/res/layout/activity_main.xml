@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E8E8E8"
+    android:background="@color/homeback"
     tools:context=".MainActivity">
 
     <LinearLayout
@@ -25,6 +25,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="No-Filter"
+            android:textColor="@color/filtercolor"
+
             android:padding="10dp"
             android:fontFamily="@font/regular"
             android:layout_margin="5dp"
@@ -38,6 +40,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="High to Low"
+            android:textColor="@color/filtercolor"
             android:fontFamily="@font/regular"
             android:layout_gravity="center_vertical"
             android:background="@drawable/filterback"
@@ -49,6 +52,8 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Low to High"
+            android:textColor="@color/filtercolor"
+
             android:fontFamily="@font/regular"
             android:layout_gravity="center_vertical"
             android:background="@drawable/filterback"
@@ -67,7 +72,7 @@
         android:layout_alignParentRight="true"
         android:layout_alignParentBottom="true"
         android:id="@+id/newnotes"
-        android:backgroundTint="@color/Red"
+        android:backgroundTint="@color/Red1"
         android:layout_marginStart="26dp"
         android:layout_marginTop="26dp"
         android:layout_marginEnd="26dp"

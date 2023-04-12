@@ -1,13 +1,14 @@
 package com.example.keepnotes;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
-import androidx.recyclerview.widget.GridLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -31,6 +32,7 @@ public class MainActivity extends AppCompatActivity {
     HomeAdapter adapter;
     List<Notes> filternotesdata;
     TextView nofilter, htol, ltoh;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -76,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         button.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                startActivity(new Intent(MainActivity.this, InsertNotes.class));
+                createNote();
             }
         });
 
@@ -90,7 +92,9 @@ public class MainActivity extends AppCompatActivity {
 
 
     }
-
+    private void createNote(){
+        startActivity(new Intent(MainActivity.this, InsertNotes.class));
+    }
     private void loaddata(int i) {
         if (i == 0) {
             notes_viewModel.getAllNotes.observe(this, new Observer<List<Notes>>() {
@@ -132,6 +136,7 @@ public class MainActivity extends AppCompatActivity {
     public boolean onCreateOptionsMenu(Menu menu) {
         getMenuInflater().inflate(R.menu.search_menu, menu);
         MenuItem item = menu.findItem(R.id.app_bar_search);
+
         SearchView searchView = (SearchView) item.getActionView();
         searchView.setQueryHint("Search Notes Here ...");
         searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
@@ -153,6 +158,19 @@ public class MainActivity extends AppCompatActivity {
         });
 
         return super.onCreateOptionsMenu(menu);
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.app_bar_setting:
+                String subject = "Please Fix this bug";
+                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                        "mailto", "agarg1107@gmail.com", null));
+                emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+                startActivity(Intent.createChooser(emailIntent, null));
+            default:return super.onOptionsItemSelected(item);
+        }
     }
 
     private void Notessearcher(String s) {

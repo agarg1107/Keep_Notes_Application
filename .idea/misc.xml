@@ -18,7 +18,7 @@
         <entry key="..\:/KeepNotes/app/src/main/res/drawable/viewdelete.xml" value="0.2703125" />
         <entry key="..\:/KeepNotes/app/src/main/res/drawable/yellow_circle.xml" value="0.2703125" />
         <entry key="..\:/KeepNotes/app/src/main/res/layout/activity_insert_note.xml" value="0.264" />
-        <entry key="..\:/KeepNotes/app/src/main/res/layout/activity_main.xml" value="0.264" />
+        <entry key="..\:/KeepNotes/app/src/main/res/layout/activity_main.xml" value="0.1" />
         <entry key="..\:/KeepNotes/app/src/main/res/layout/activity_splash_screen.xml" value="0.2" />
         <entry key="..\:/KeepNotes/app/src/main/res/layout/activity_update_notes.xml" value="0.25416666666666665" />
         <entry key="..\:/KeepNotes/app/src/main/res/layout/delete_layout.xml" value="0.22570532915360503" />
@@ -31,7 +31,7 @@
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="1.8" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

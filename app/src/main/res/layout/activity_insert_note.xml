@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#E8E8E8"
+    android:background="@color/homeback"
     tools:context=".Activity.InsertNotes">
 
     <EditText
@@ -17,6 +17,7 @@
         android:layout_marginRight="15dp"
         android:layout_marginBottom="15dp"
         android:background="@drawable/edit_text_back"
+       android:singleLine="true"
         android:fontFamily="@font/regular"
         android:textColorHint="@color/black"
         android:hint="Title..."
@@ -37,6 +38,7 @@
         android:hint="Subtitle..."
         android:minHeight="48dp"
         android:padding="10dp"
+        android:singleLine="true"
         app:layout_constraintEnd_toEndOf="@+id/insert_title"
         app:layout_constraintStart_toStartOf="@+id/insert_title"
         app:layout_constraintTop_toBottomOf="@+id/insert_title" />

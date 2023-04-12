@@ -7,6 +7,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="7dp"
+        app:cardBackgroundColor="@color/cardback"
         app:cardCornerRadius="18dp"
         >
         <View
@@ -25,10 +26,13 @@
 
             <TextView
                 android:id="@+id/home_title"
-                android:layout_width="match_parent"
+                android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:fontFamily="@font/regular"
                 android:padding="5dp"
+                android:maxLines="1"
+                android:ellipsize="end"
+                android:layout_marginRight="40dp"
                 android:text="Title"/>
             <TextView
                 android:id="@+id/home_subtitle"

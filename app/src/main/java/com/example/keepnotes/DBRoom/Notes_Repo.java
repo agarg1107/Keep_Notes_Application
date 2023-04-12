@@ -6,7 +6,7 @@ import androidx.lifecycle.LiveData;
 
 import java.util.List;
 
-public class Notes_Repo {
+public class    Notes_Repo {
 
     public Notes_Dao notes_dao;
     public LiveData<List<Notes>> getAllNotes;

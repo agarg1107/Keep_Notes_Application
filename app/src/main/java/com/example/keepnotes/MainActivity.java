@@ -164,15 +164,17 @@ public class MainActivity extends AppCompatActivity {
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
         switch (item.getItemId()){
             case R.id.app_bar_setting:
-                String subject = "Please Fix this bug";
-                Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
-                        "mailto", "agarg1107@gmail.com", null));
-                emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
-                startActivity(Intent.createChooser(emailIntent, null));
+                report();
             default:return super.onOptionsItemSelected(item);
         }
     }
-
+    private void report(){
+        String subject = "Please Fix this bug";
+        Intent emailIntent = new Intent(Intent.ACTION_SENDTO, Uri.fromParts(
+                "mailto", "agarg1107@gmail.com", null));
+        emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
+        startActivity(Intent.createChooser(emailIntent, null));
+    }
     private void Notessearcher(String s) {
         ArrayList<Notes> newnotes = new ArrayList<>();
         for (Notes notes : this.filternotesdata) {

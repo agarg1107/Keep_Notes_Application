@@ -127,7 +127,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void setAdapter(List<Notes> notes) {
-        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL));
+        recyclerView.setLayoutManager(new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL));
         adapter = new HomeAdapter(MainActivity.this, notes);
         recyclerView.setAdapter(adapter);
     }

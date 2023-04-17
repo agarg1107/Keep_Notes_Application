@@ -122,17 +122,7 @@ public class UpdateNotes extends AppCompatActivity {
                 binding.greenPriorityUp.setImageResource(0);
             }
         });
-        binding.update.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                ntitle = binding.updateTitle.getText().toString();
-                nsubtitle = binding.updateSubtitle.getText().toString();
-                nnote = binding.updateNote.getText().toString();
-                updatenote(ntitle, nsubtitle, nnote);
-            }
 
-
-        });
     }
 
     private void updatenote(String ntitle, String nsubtitle, String nnote) {
@@ -204,6 +194,11 @@ public class UpdateNotes extends AppCompatActivity {
 
                 savePdf();
             }
+        } else if (item.getItemId() == R.id.update_data) {
+            ntitle = binding.updateTitle.getText().toString();
+            nsubtitle = binding.updateSubtitle.getText().toString();
+            nnote = binding.updateNote.getText().toString();
+            updatenote(ntitle, nsubtitle, nnote);
         }
         return true;
     }

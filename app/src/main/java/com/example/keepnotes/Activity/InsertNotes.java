@@ -1,17 +1,27 @@
 package com.example.keepnotes.Activity;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.example.keepnotes.DBRoom.Notes;
 import com.example.keepnotes.DBRoom.Notes_ViewModel;
 import com.example.keepnotes.R;
 import com.example.keepnotes.databinding.ActivityInsertNoteBinding;
+import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -63,16 +73,7 @@ public class InsertNotes extends AppCompatActivity {
         });
 
 
-        binding.createnote.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                title = binding.insertTitle.getText().toString();
-                subtitle = binding.insertSubtitle.getText().toString();
-                note = binding.insertNote.getText().toString();
-                create_note(title, subtitle, note);
 
-            }
-        });
     }
 
     private void create_note(String title, String subtitle, String note) {
@@ -95,5 +96,22 @@ public class InsertNotes extends AppCompatActivity {
         }
 
 
+    }
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.insert_menu, menu);
+        return true;
+    }
+
+
+    @Override
+    public boolean onOptionsItemSelected(@NonNull MenuItem item) {
+        if (item.getItemId() == R.id.insert_main_data) {
+            title = binding.insertTitle.getText().toString();
+            subtitle = binding.insertSubtitle.getText().toString();
+            note = binding.insertNote.getText().toString();
+            create_note(title, subtitle, note);
+        }
+        return true;
     }
 }

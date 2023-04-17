@@ -13,4 +13,10 @@
         android:title="PDF"
         app:showAsAction="always"
         />
+    <item
+        android:id="@+id/update_data"
+        android:icon="@drawable/baseline_save_24"
+        android:title="Save"
+        app:showAsAction="always"
+        />
 </menu>

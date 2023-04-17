@@ -7,12 +7,13 @@
     android:background="@color/homeback"
     tools:context=".Activity.UpdateNotes">
 
+
     <EditText
         android:id="@+id/update_title"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
-        android:layout_marginTop="40dp"
+        android:layout_marginTop="28dp"
         android:layout_marginLeft="15dp"
         android:singleLine="true"
         android:layout_marginRight="15dp"
@@ -23,9 +24,11 @@
         android:hint="Title..."
         android:minHeight="48dp"
         android:padding="10dp"
+
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.517"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toBottomOf="@+id/prioritylayout" />
 
     <EditText
         android:id="@+id/update_subtitle"
@@ -40,8 +43,10 @@
         android:minHeight="48dp"
         android:padding="10dp"
         app:layout_constraintEnd_toEndOf="@+id/update_title"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="@+id/update_title"
         app:layout_constraintTop_toBottomOf="@+id/update_title" />
+
 
     <LinearLayout
         android:id="@+id/prioritylayout"
@@ -49,9 +54,9 @@
         android:layout_height="wrap_content"
         android:layout_margin="15dp"
         android:orientation="horizontal"
-        app:layout_constraintLeft_toLeftOf="@+id/update_subtitle"
-        app:layout_constraintRight_toRightOf="@+id/update_subtitle"
-        app:layout_constraintTop_toBottomOf="@+id/update_subtitle">
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
 
         <TextView
             android:layout_width="wrap_content"
@@ -87,8 +92,8 @@
 
     <EditText
         android:id="@+id/update_note"
-        android:layout_width="match_parent"
-        android:layout_height="315dp"
+        android:layout_width="331dp"
+        android:layout_height="380dp"
         android:layout_margin="15dp"
         android:background="@drawable/edit_text_back"
         android:gravity="start"
@@ -97,22 +102,10 @@
         android:padding="10dp"
         android:fontFamily="@font/regular"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="@+id/prioritylayout"
-        app:layout_constraintRight_toRightOf="@+id/prioritylayout"
-        app:layout_constraintTop_toBottomOf="@+id/prioritylayout"
-        app:layout_constraintVertical_bias="0.0" />
-
-    <com.google.android.material.floatingactionbutton.FloatingActionButton
-        android:id="@+id/update"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:backgroundTint="@color/Red"
-        android:src="@drawable/ic_baseline_check_24"
-        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_margin="26dp"
-        android:contentDescription="notecreated"
-        />
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/update_subtitle"
+        app:layout_constraintVertical_bias="0.364" />
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>

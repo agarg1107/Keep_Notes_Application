@@ -19,4 +19,10 @@
         android:title="Save"
         app:showAsAction="always"
         />
+    <item
+        android:id="@+id/update_music"
+        android:icon="@drawable/baseline_music_note_24"
+        android:title="Save"
+        app:showAsAction="always"
+        />
 </menu>

@@ -22,6 +22,7 @@ import android.os.Bundle;
 import android.os.Environment;
 import android.os.Handler;
 import android.os.Looper;
+import android.speech.tts.TextToSpeech;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -58,6 +59,7 @@ public class UpdateNotes extends AppCompatActivity {
     int uid;
     String utitle, usubtitle, udate, upriority, unote;
     String ntitle, nsubtitle, nnote;
+    TextToSpeech tts;
     Notes_ViewModel notes_viewModel;
 
     @Override
@@ -67,6 +69,17 @@ public class UpdateNotes extends AppCompatActivity {
         setContentView(binding.getRoot());
 
         notes_viewModel = new ViewModelProvider(this).get(Notes_ViewModel.class);
+        tts = new TextToSpeech(getApplicationContext(), new TextToSpeech.OnInitListener() {
+            @Override
+            public void onInit(int i) {
+                if (i != TextToSpeech.ERROR){
+                    tts.setLanguage(Locale.UK);
+                }
+                else{
+                    Toast.makeText(UpdateNotes.this, "Error While speech", Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
 
         uid = getIntent().getIntExtra("id", 0);
         utitle = getIntent().getStringExtra("title");
@@ -154,7 +167,13 @@ public class UpdateNotes extends AppCompatActivity {
         getMenuInflater().inflate(R.menu.delete_menu, menu);
         return true;
     }
-
+    public void onPause(){
+        if(tts !=null){
+            tts.stop();
+            tts.shutdown();
+        }
+        super.onPause();
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -200,6 +219,15 @@ public class UpdateNotes extends AppCompatActivity {
             nnote = binding.updateNote.getText().toString();
             updatenote(ntitle, nsubtitle, nnote);
         }
+        else if(item.getItemId() == R.id.update_music){
+            if(unote.equals("")){
+                Toast.makeText(this, "Please enter Note", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                tts.speak(unote,TextToSpeech.QUEUE_FLUSH,null);
+            }
+        }
+
         return true;
     }
 

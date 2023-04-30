@@ -1,27 +1,43 @@
 package com.example.keepnotes;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.lifecycle.Observer;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.recyclerview.widget.StaggeredGridLayoutManager;
 
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
+import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
+import android.provider.MediaStore;
 import android.util.Log;
+import android.util.SparseArray;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.SearchView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.example.keepnotes.Activity.InsertNotes;
 import com.example.keepnotes.DBRoom.Notes;
 import com.example.keepnotes.DBRoom.Notes_ViewModel;
+import com.google.android.gms.vision.Frame;
+import com.google.android.gms.vision.text.TextBlock;
+import com.google.android.gms.vision.text.TextRecognizer;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
+import com.theartofdev.edmodo.cropper.CropImage;
+import com.theartofdev.edmodo.cropper.CropImageView;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -32,14 +48,20 @@ public class MainActivity extends AppCompatActivity {
     HomeAdapter adapter;
     List<Notes> filternotesdata;
     TextView nofilter, htol, ltoh;
+    Bitmap bitmap;
 
-
+    private  static  final int Request_cam_code =100;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-
+        if(ContextCompat.checkSelfPermission(MainActivity.this, Manifest.permission.CAMERA)!= PackageManager.PERMISSION_GRANTED){
+            ActivityCompat.requestPermissions(MainActivity.this, new String[]{
+                    Manifest.permission.CAMERA
+            },Request_cam_code);
+            Log.d("checkdatamain","done3");
+        }
         button = findViewById(R.id.newnotes);
         recyclerView = findViewById(R.id.notes_recycle);
         ltoh = findViewById(R.id.ltoh);
@@ -162,11 +184,16 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
-        switch (item.getItemId()){
-            case R.id.app_bar_setting:
-                report();
-            default:return super.onOptionsItemSelected(item);
+        if(item.getItemId() == R.id.app_bar_ocr){
+            ocr();
         }
+        else if(item.getItemId() == R.id.app_bar_setting){
+            report();
+        }
+
+            return super.onOptionsItemSelected(item);
+
+
     }
     private void report(){
         String subject = "Please Fix this bug";
@@ -174,6 +201,11 @@ public class MainActivity extends AppCompatActivity {
                 "mailto", "agarg1107@gmail.com", null));
         emailIntent.putExtra(Intent.EXTRA_SUBJECT, subject);
         startActivity(Intent.createChooser(emailIntent, null));
+    }
+    private void ocr(){
+        Log.d("checkdatamain","done2");
+
+        CropImage.activity().setGuidelines(CropImageView.Guidelines.ON).start(MainActivity.this);
     }
     private void Notessearcher(String s) {
         ArrayList<Notes> newnotes = new ArrayList<>();
@@ -184,5 +216,51 @@ public class MainActivity extends AppCompatActivity {
         }
         this.adapter.notessearch(newnotes);
 
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        Log.d("checkdatamain","done5");
+        if(requestCode == CropImage.CROP_IMAGE_ACTIVITY_REQUEST_CODE){
+            Log.d("checkdatamain","done6");
+            CropImage.ActivityResult result = CropImage.getActivityResult(data);
+            Log.d("checkdatamain",requestCode+"");
+
+                Log.d("checkdatamain","done7");
+                Uri resultUri = result.getUri();
+                try {
+                    Log.d("checkdatamain","done8");
+                    bitmap = MediaStore.Images.Media.getBitmap(this.getContentResolver(),resultUri);
+                    getText(bitmap);
+                } catch (IOException e) {
+                    Toast.makeText(this, "yes", Toast.LENGTH_SHORT).show();
+                }
+
+        }
+    }
+    private void getText(Bitmap bitmap){
+        Log.d("checkdatamain","done9");
+        TextRecognizer recognizer = new TextRecognizer.Builder(this).build();
+        if(!recognizer.isOperational()){
+            Log.d("checkdatamain","done10");
+            Toast.makeText(MainActivity.this, "Error", Toast.LENGTH_SHORT).show();
+        }
+        else{
+            Log.d("checkdatamain","done11");
+            Frame frame = new Frame.Builder().setBitmap(bitmap).build();
+            SparseArray<TextBlock> textBlockSparseArray = recognizer.detect(frame);
+            StringBuilder stringBuilder = new StringBuilder();
+            for(int i =0; i<textBlockSparseArray.size();i++){
+                Log.d("checkdatamain","done12");
+                TextBlock textBlock = textBlockSparseArray.valueAt(i);
+                stringBuilder.append(textBlock.getValue());
+                stringBuilder.append("\n");
+            }
+            String message = stringBuilder.toString();
+            Intent intent = new Intent(MainActivity.this, InsertNotes.class);
+            intent.putExtra("message", message);
+            startActivity(intent);
+        }
     }
 }

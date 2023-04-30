@@ -1,14 +1,18 @@
 package com.example.keepnotes.Activity;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 import androidx.lifecycle.ViewModelProvider;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
+import android.hardware.camera2.TotalCaptureResult;
 import android.os.Build;
 import android.os.Bundle;
+import android.speech.RecognizerIntent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.Menu;
@@ -25,6 +29,7 @@ import com.google.android.material.bottomsheet.BottomSheetDialog;
 
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
@@ -33,6 +38,7 @@ import java.util.Locale;
 public class InsertNotes extends AppCompatActivity {
 
     ActivityInsertNoteBinding binding;
+    public static final int Request_speech_code = 100;
     String title, subtitle, note;
     Notes_ViewModel notes_viewModel;
     String priority = "1";
@@ -40,10 +46,16 @@ public class InsertNotes extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+
         binding = ActivityInsertNoteBinding.inflate(getLayoutInflater());
         setContentView(binding.getRoot());
         notes_viewModel = new ViewModelProvider(this).get(Notes_ViewModel.class);
-
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            String message = bundle.getString("message");
+            binding.insertNote.setText(message);
+        }
         binding.redPriority.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -103,6 +115,20 @@ public class InsertNotes extends AppCompatActivity {
         return true;
     }
 
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        switch (requestCode){
+            case Request_speech_code:
+                if(resultCode == RESULT_OK && null != data){
+                    ArrayList<String> result = data.getStringArrayListExtra(RecognizerIntent.EXTRA_RESULTS);
+                    String str = binding.insertNote.getText().toString();
+                    str = str + "\n";
+                    str = str + result.get(0);
+                    binding.insertNote.setText(str);
+                }
+        }
+    }
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -111,6 +137,19 @@ public class InsertNotes extends AppCompatActivity {
             subtitle = binding.insertSubtitle.getText().toString();
             note = binding.insertNote.getText().toString();
             create_note(title, subtitle, note);
+        }
+        else if(item.getItemId() == R.id.insert_main_voice){
+            Intent intent = new Intent(RecognizerIntent.ACTION_RECOGNIZE_SPEECH);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE_MODEL,
+                    RecognizerIntent.LANGUAGE_MODEL_FREE_FORM);
+            intent.putExtra(RecognizerIntent.EXTRA_LANGUAGE, Locale.getDefault());
+            intent.putExtra(RecognizerIntent.EXTRA_PROMPT,"Hi speak the Note");
+            try{
+
+                startActivityForResult(intent,Request_speech_code);
+            }catch (Exception e){
+                Toast.makeText(this, ""+e.getMessage(), Toast.LENGTH_SHORT).show();
+            }
         }
         return true;
     }

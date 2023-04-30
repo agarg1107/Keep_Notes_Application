@@ -7,4 +7,10 @@
         android:title="Save"
         app:showAsAction="always"
         />
+    <item
+        android:id="@+id/insert_main_voice"
+        android:icon="@drawable/baseline_record_voice_over_24"
+        android:title="Save"
+        app:showAsAction="always"
+        />
 </menu>

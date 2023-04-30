@@ -13,5 +13,11 @@
         app:showAsAction="always"
         android:title="Setting"
          />
+    <item
+        android:id="@+id/app_bar_ocr"
+        android:icon="@drawable/baseline_image_24"
+        app:showAsAction="always"
+        android:title="Setting"
+        />
 
 </menu>
